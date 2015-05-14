@@ -17,7 +17,7 @@ case "$HADOOP_MAJOR_VERSION" in
     sed -i 's/-jvm server/-server/g' /root/ephemeral-hdfs/bin/hadoop
     ;;
   2) 
-    wget http://s3.amazonaws.com/spark-related-packages/hadoop-2.0.0-cdh4.2.0.tar.gz  
+    wget http://hli-bix-us-west-2/lpierce/adam/spark/hadoop-2.6.0-cdh5.4.0.tar.gz
     echo "Unpacking Hadoop"
     tar xvzf hadoop-*.tar.gz > /tmp/spark-ec2_hadoop.log
     rm hadoop-*.tar.gz
