@@ -32,7 +32,8 @@ case "$HADOOP_MAJOR_VERSION" in
      echo "ERROR: Unknown Hadoop version"
      return -1
 esac
-cp /root/hadoop-native/* /root/persistent-hdfs/lib/native/
+#Not necessary for cloudera install???
+#cp /root/hadoop-native/* /root/persistent-hdfs/lib/native/
 /root/spark-ec2/copy-dir /root/persistent-hdfs
 
 popd > /dev/null
