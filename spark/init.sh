@@ -124,8 +124,8 @@ else
   esac
 
   echo "Unpacking Spark"
-  tar xvzf spark-*.tar.gz > /tmp/spark-ec2_spark.log
-  rm spark-*.tar.gz
+  tar xvzf spark-*.tgz > /tmp/spark-ec2_spark.log
+  rm spark-*.tgz
   mv `ls -d spark-* | grep -v ec2` spark
 fi
 
