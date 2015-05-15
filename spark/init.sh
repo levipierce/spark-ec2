@@ -114,7 +114,8 @@ else
         wget http://s3.amazonaws.com/spark-related-packages/spark-1.2.1-bin-hadoop1.tgz
       else
         #wget http://s3.amazonaws.com/spark-related-packages/spark-1.2.1-bin-cdh4.tgz
-        wget http://archive.cloudera.com/cdh5/cdh/5/spark-1.3.0-cdh5.4.1.tar.gz
+        #wget http://archive.cloudera.com/cdh5/cdh/5/spark-1.3.0-cdh5.4.1.tar.gz
+        wget http://s3.amazonaws.com/spark-related-packages/spark-1.3.1-bin-cdh4.tgz
       fi
       ;;
     *)

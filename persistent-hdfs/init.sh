@@ -16,23 +16,22 @@ case "$HADOOP_MAJOR_VERSION" in
     mv hadoop-1.0.4/ persistent-hdfs/
     ;;
   2)
-    wget http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.4.1.tar.gz
+    wget http://s3.amazonaws.com/spark-related-packages/hadoop-2.0.0-cdh4.2.0.tar.gz  
     echo "Unpacking Hadoop"
     tar xvzf hadoop-*.tar.gz > /tmp/spark-ec2_hadoop.log
     rm hadoop-*.tar.gz
-    mv hadoop-2.6.0-cdh5.4.1/ persistent-hdfs/
+    mv hadoop-2.0.0-cdh4.2.0/ ephemeral-hdfs/
 
     # Have single conf dir
-    rm -rf /root/persistent-hdfs/etc/hadoop/
-    ln -s /root/persistent-hdfs/conf /root/persistent-hdfs/etc/hadoop
+    rm -rf /root/ephemeral-hdfs/etc/hadoop/
+    ln -s /root/ephemeral-hdfs/conf /root/ephemeral-hdfs/etc/hadoop
     ;;
 
   *)
      echo "ERROR: Unknown Hadoop version"
      return -1
 esac
-#Not necessary for cloudera install???
-#cp /root/hadoop-native/* /root/persistent-hdfs/lib/native/
-/root/spark-ec2/copy-dir /root/persistent-hdfs
+cp /root/hadoop-native/* ephemeral-hdfs/lib/native/
+/root/spark-ec2/copy-dir /root/ephemeral-hdfs
 
 popd > /dev/null
