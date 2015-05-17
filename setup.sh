@@ -24,7 +24,7 @@ source /home/ubuntu/ec2-variables.sh
 PRIVATE_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/local-hostname`
 PUBLIC_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/hostname`
 hostname $PRIVATE_DNS
-sudo echo $PRIVATE_DNS > /etc/hostname
+sudo bash -c "echo $PRIVATE_DNS > /etc/hostname"
 export HOSTNAME=$PRIVATE_DNS  # Fix the bash built-in hostname variable too
 
 echo "Setting up Spark on `hostname`..."

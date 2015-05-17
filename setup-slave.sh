@@ -113,7 +113,7 @@ sudo rm -f /home/ubuntu/.ssh/known_hosts
 sudo /home/ubuntu/spark-ec2/create-swap.sh $SWAP_MB
 
 # Allow memory to be over committed. Helps in pyspark where we fork
-sudo echo 1 > /proc/sys/vm/overcommit_memory
+sudo bash -c "echo 1 > /proc/sys/vm/overcommit_memory"
 
 # Add github to known hosts to get git@github.com clone to work
 # TODO(shivaram): Avoid duplicate entries ?
@@ -122,8 +122,8 @@ cat /home/ubuntu/spark-ec2/github.hostkey >> /home/ubuntu/.ssh/known_hosts
 # Create /usr/bin/realpath which is used by R to find Java installations
 # NOTE: /usr/bin/realpath is missing in CentOS AMIs. See
 # http://superuser.com/questions/771104/usr-bin-realpath-not-found-in-centos-6-5
-sudo echo '#!/bin/bash' > /usr/bin/realpath
-sudo echo 'readlink -e "$@"' >> /usr/bin/realpath
+sudo bash -c "echo '#!/bin/bash' > /usr/bin/realpath"
+sudo bash -c "echo 'readlink -e "$@"' >> /usr/bin/realpath"`
 sudo chmod a+x /usr/bin/realpath
 
 popd > /dev/null
