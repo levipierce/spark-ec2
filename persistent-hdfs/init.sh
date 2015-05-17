@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd /root > /dev/null
+pushd /home/ubuntu > /dev/null
 
 if [ -d "persistent-hdfs" ]; then
   echo "Persistent HDFS seems to be installed. Exiting."
@@ -23,15 +23,15 @@ case "$HADOOP_MAJOR_VERSION" in
     mv hadoop-2.0.0-cdh4.2.0/ ephemeral-hdfs/
 
     # Have single conf dir
-    rm -rf /root/ephemeral-hdfs/etc/hadoop/
-    ln -s /root/ephemeral-hdfs/conf /root/ephemeral-hdfs/etc/hadoop
+    rm -rf /home/ubuntu/ephemeral-hdfs/etc/hadoop/
+    ln -s /home/ubuntu/ephemeral-hdfs/conf /home/ubuntu/ephemeral-hdfs/etc/hadoop
     ;;
 
   *)
      echo "ERROR: Unknown Hadoop version"
      return -1
 esac
-cp /root/hadoop-native/* ephemeral-hdfs/lib/native/
-/root/spark-ec2/copy-dir /root/ephemeral-hdfs
+cp /home/ubuntu/hadoop-native/* ephemeral-hdfs/lib/native/
+/home/ubuntu/spark-ec2/copy-dir /home/ubuntu/ephemeral-hdfs
 
 popd > /dev/null

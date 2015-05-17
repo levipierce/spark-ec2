@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd /root > /dev/null
+pushd /home/ubuntu > /dev/null
 case "$HADOOP_MAJOR_VERSION" in
   1)
     echo "Nothing to initialize for MapReduce in Hadoop 1"
@@ -16,5 +16,5 @@ case "$HADOOP_MAJOR_VERSION" in
      echo "ERROR: Unknown Hadoop version"
      return -1
 esac
-/root/spark-ec2/copy-dir /root/mapreduce
+/home/ubuntu/spark-ec2/copy-dir /home/ubuntu/mapreduce
 popd > /dev/null

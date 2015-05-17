@@ -1,12 +1,12 @@
 #!/bin/bash
 
-/root/spark-ec2/copy-dir /etc/ganglia/
+/home/ubuntu/spark-ec2/copy-dir /etc/ganglia/
 
 # Start gmond everywhere
 /etc/init.d/gmond restart
 
 for node in $SLAVES $OTHER_MASTERS; do
-  ssh -t -t $SSH_OPTS root@$node "/etc/init.d/gmond restart"
+  ssh -t -t $SSH_OPTS ubuntu@$node "/etc/init.d/gmond restart"
 done
 
 # gmeta needs rrds to be owned by nobody
