@@ -28,7 +28,6 @@ try:
     slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
 except ValueError as e:
     print "Value error({0}): {1}".format(e.errno, e.strerror)
-    continue
 
 
 try:
