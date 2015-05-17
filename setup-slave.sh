@@ -10,12 +10,12 @@
 # Make sure we are in the spark-ec2 directory
 pushd /home/ubuntu/spark-ec2 > /dev/null
 
-source /home/ubuntu/ec2-variables.sh
+source /home/ubuntu/spark-ec2/ec2-variables.sh
 
 # Set hostname based on EC2 private DNS name, so that it is set correctly
 # even if the instance is restarted with a different private DNS name
 PRIVATE_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/local-hostname`
-hostname $PRIVATE_DNS
+sudo hostname $PRIVATE_DNS
 sudo bash -c "echo $PRIVATE_DNS > /etc/hostname"
 HOSTNAME=$PRIVATE_DNS  # Fix the bash built-in hostname variable too
 
