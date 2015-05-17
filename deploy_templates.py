@@ -24,27 +24,38 @@ slave_mem_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
 
 slave_cpu_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
         (first_slave, cpu_command)
+try:
+    slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
+except ValueError e:
+    print "Value error({0}): {1}".format(e.errno, e.strerror)
+    continue
 
-slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
 
-slave_cpus = int(os.popen(slave_cpu_command).read().strip())
+try:
+    slave_cpus = int(os.popen(slave_cpu_command).read().strip())
 
-system_ram_kb = min(slave_ram_kb, master_ram_kb)
+    system_ram_kb = min(slave_ram_kb, master_ram_kb)
 
-system_ram_mb = system_ram_kb / 1024
-# Leave some RAM for the OS, Hadoop daemons, and system caches
-if system_ram_mb > 100*1024:
-  spark_mb = system_ram_mb - 15 * 1024 # Leave 15 GB RAM
-elif system_ram_mb > 60*1024:
-  spark_mb = system_ram_mb - 10 * 1024 # Leave 10 GB RAM
-elif system_ram_mb > 40*1024:
-  spark_mb = system_ram_mb - 6 * 1024 # Leave 6 GB RAM
-elif system_ram_mb > 20*1024:
-  spark_mb = system_ram_mb - 3 * 1024 # Leave 3 GB RAM
-elif system_ram_mb > 10*1024:
-  spark_mb = system_ram_mb - 2 * 1024 # Leave 2 GB RAM
+    system_ram_mb = system_ram_kb / 1024
+    # Leave some RAM for the OS, Hadoop daemons, and system caches
+    if system_ram_mb > 100*1024:
+      spark_mb = system_ram_mb - 15 * 1024 # Leave 15 GB RAM
+    elif system_ram_mb > 60*1024:
+      spark_mb = system_ram_mb - 10 * 1024 # Leave 10 GB RAM
+    elif system_ram_mb > 40*1024:
+      spark_mb = system_ram_mb - 6 * 1024 # Leave 6 GB RAM
+    elif system_ram_mb > 20*1024:
+      spark_mb = system_ram_mb - 3 * 1024 # Leave 3 GB RAM
+    elif system_ram_mb > 10*1024:
+      spark_mb = system_ram_mb - 2 * 1024 # Leave 2 GB RAM
+    else:
+      spark_mb = max(512, system_ram_mb - 1300) # Leave 1.3 GB RAM
+
+except ValueError e:
+    print "Value error({0}): {1}".format(e.errno, e.strerror)
+    continue
 else:
-  spark_mb = max(512, system_ram_mb - 1300) # Leave 1.3 GB RAM
+    spark_mb = 225
 
 # Make tachyon_mb as spark_mb for now.
 tachyon_mb = spark_mb
