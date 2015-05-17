@@ -26,7 +26,7 @@ slave_cpu_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
         (first_slave, cpu_command)
 try:
     slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
-except ValueError e:
+except ValueError as e:
     print "Value error({0}): {1}".format(e.errno, e.strerror)
     continue
 
@@ -51,7 +51,7 @@ try:
     else:
       spark_mb = max(512, system_ram_mb - 1300) # Leave 1.3 GB RAM
 
-except ValueError e:
+except ValueError as e:
     print "Value error({0}): {1}".format(e.errno, e.strerror)
     continue
 else:
