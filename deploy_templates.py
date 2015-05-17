@@ -79,8 +79,12 @@ for path, dirs, files in os.walk(template_dir):
     #Skip svn files...
     if path.find(".svn") == -1:
         dest_dir = os.path.join('/', path[len(template_dir):])
-        if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
+        try:
+            if not os.path.exists(dest_dir):
+                os.makedirs(dest_dir)
+        except OSError as e:
+            print "OS error({0}): {1}".format(e.errno, e.strerror)
+            continue
         for filename in files:
             if filename[0] not in '#.~' and filename[-1] != '~':
                 dest_file = os.path.join(dest_dir, filename)
