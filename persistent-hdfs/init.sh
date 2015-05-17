@@ -20,18 +20,18 @@ case "$HADOOP_MAJOR_VERSION" in
     echo "Unpacking Hadoop"
     tar xvzf hadoop-*.tar.gz > /tmp/spark-ec2_hadoop.log
     rm hadoop-*.tar.gz
-    mv hadoop-2.0.0-cdh4.2.0/ ephemeral-hdfs/
+    mv hadoop-2.0.0-cdh4.2.0/ persistent-hdfs/
 
     # Have single conf dir
-    rm -rf /home/ubuntu/ephemeral-hdfs/etc/hadoop/
-    ln -s /home/ubuntu/ephemeral-hdfs/conf /home/ubuntu/ephemeral-hdfs/etc/hadoop
+    rm -rf /home/ubuntu/persistent-hdfs/etc/hadoop/
+    ln -s /home/ubuntu/persistent-hdfs/conf /home/ubuntu/persistent-hdfs/etc/hadoop
     ;;
 
   *)
      echo "ERROR: Unknown Hadoop version"
      return -1
 esac
-cp /home/ubuntu/hadoop-native/* ephemeral-hdfs/lib/native/
-/home/ubuntu/spark-ec2/copy-dir /home/ubuntu/ephemeral-hdfs
+cp /home/ubuntu/hadoop-native/* persistent-hdfs/lib/native/
+/home/ubuntu/spark-ec2/copy-dir /home/ubuntu/persistent-hdfs
 
 popd > /dev/null
