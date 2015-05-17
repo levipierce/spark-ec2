@@ -10,7 +10,7 @@
 # Make sure we are in the spark-ec2 directory
 pushd /home/ubuntu/spark-ec2 > /dev/null
 
-source ec2-variables.sh
+source /home/ubuntu/ec2-variables.sh
 
 # Set hostname based on EC2 private DNS name, so that it is set correctly
 # even if the instance is restarted with a different private DNS name

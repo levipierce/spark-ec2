@@ -20,7 +20,7 @@ case "$HADOOP_MAJOR_VERSION" in
 
     # Have single conf dir
     rm -rf /home/ubuntu/ephemeral-hdfs/etc/hadoop/
-    ln -s /home/ubuntu/ephemeral-hdfs/conf /home/ubunt/ephemeral-hdfs/etc/hadoop
+    ln -s /home/ubuntu/ephemeral-hdfs/conf /home/ubuntu/ephemeral-hdfs/etc/hadoop
     ;;
 
   *)
