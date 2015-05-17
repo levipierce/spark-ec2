@@ -76,18 +76,19 @@ template_vars = {
 template_dir="/home/ubuntu/spark-ec2/templates"
 
 for path, dirs, files in os.walk(template_dir):
-  if path.find(".svn") == -1:
-    dest_dir = os.path.join('/', path[len(template_dir):])
-    if not os.path.exists(dest_dir):
-        os.makedirs(dest_dir)
-    for filename in files:
-      if filename[0] not in '#.~' and filename[-1] != '~':
-        dest_file = os.path.join(dest_dir, filename)
-        with open(os.path.join(path, filename)) as src:
-          with open(dest_file, "w") as dest:
-            print "Configuring " + dest_file
-            text = src.read()
-            for key in template_vars:
-              text = text.replace("{{" + key + "}}", template_vars[key] or '')
-            dest.write(text)
-            dest.close()
+    #Skip svn files...
+    if path.find(".svn") == -1:
+        dest_dir = os.path.join('/', path[len(template_dir):])
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+        for filename in files:
+            if filename[0] not in '#.~' and filename[-1] != '~':
+                dest_file = os.path.join(dest_dir, filename)
+                with open(os.path.join(path, filename)) as src:
+                    with open(dest_file, "w") as dest:
+                        print "Configuring " + dest_file
+                        text = src.read()
+                        for key in template_vars:
+                            text = text.replace("{{" + key + "}}", template_vars[key] or '')
+                        dest.write(text)
+                        dest.close()
