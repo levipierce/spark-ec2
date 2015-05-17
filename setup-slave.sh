@@ -123,7 +123,7 @@ cat /home/ubuntu/spark-ec2/github.hostkey >> /home/ubuntu/.ssh/known_hosts
 # NOTE: /usr/bin/realpath is missing in CentOS AMIs. See
 # http://superuser.com/questions/771104/usr-bin-realpath-not-found-in-centos-6-5
 sudo bash -c "echo '#!/bin/bash' > /usr/bin/realpath"
-sudo bash -c "echo 'readlink -e \"$@\"' >> /usr/bin/realpath`"
+sudo bash -c "echo 'readlink -e \"$@\"' >> /usr/bin/realpath"
 sudo chmod a+x /usr/bin/realpath
 
 popd > /dev/null
