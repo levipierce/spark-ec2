@@ -11,7 +11,7 @@ source ./setup-slave.sh
 
 for node in $SLAVES $OTHER_MASTERS; do
   echo $node
-  ssh -t -t $SSH_OPTS home/ubuntu@$node "/home/ubuntu/spark-ec2/ephemeral-hdfs/setup-slave.sh" & sleep 0.3
+  ssh -t -t $SSH_OPTS ubuntu@$node "/home/ubuntu/spark-ec2/ephemeral-hdfs/setup-slave.sh" & sleep 0.3
 done
 wait
 

@@ -24,7 +24,7 @@ case "$HADOOP_MAJOR_VERSION" in
 
     # Have single conf dir
     #rm -rf /home/ubuntu/persistent-hdfs/etc/hadoop/
-    ln -s /home/ubuntu/persistent-hdfs/conf /home/ubuntu/persistent-hdfs/etc/hadoop
+    ln -s /home/ubuntu/persistent-hdfs/etc/hadoop /home/ubuntu/persistent-hdfs/conf 
     ;;
 
   *)
