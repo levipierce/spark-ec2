@@ -94,7 +94,6 @@ for path, dirs, files in os.walk(template_dir):
                 os.makedirs(dest_dir)
         except OSError as e:
             print "OS error({0}): {1}".format(e.errno, e.strerror)
-            continue
         for filename in files:
             if filename[0] not in '#.~' and filename[-1] != '~':
                 dest_file = os.path.join(dest_dir, filename)
