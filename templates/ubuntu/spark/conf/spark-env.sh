@@ -22,4 +22,4 @@ fi
 export SPARK_PUBLIC_DNS
 
 # Set a high ulimit for large shuffles
-ulimit -n 1000000
+#ulimit -n 1000000

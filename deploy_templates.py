@@ -5,6 +5,7 @@ from __future__ import with_statement
 
 import os
 import sys
+import subprocess
 
 # Deploy the configuration file templates in the spark-ec2/templates directory
 # to the root filesystem, substituting variables such as the master hostname,
@@ -24,39 +25,27 @@ slave_mem_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
 
 slave_cpu_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
         (first_slave, cpu_command)
-try:
-    slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
-except ValueError as e:
-    print "Error slave_ram_kb"
-    #print "Value error({0})".format(e.strerror)
+slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
 
 
-try:
-    slave_cpus = int(os.popen(slave_cpu_command).read().strip())
+slave_cpus = int(os.popen(slave_cpu_command).read().strip())
 
-    system_ram_kb = min(slave_ram_kb, master_ram_kb)
+system_ram_kb = min(slave_ram_kb, master_ram_kb)
 
-    system_ram_mb = system_ram_kb / 1024
-    # Leave some RAM for the OS, Hadoop daemons, and system caches
-    if system_ram_mb > 100*1024:
-      spark_mb = system_ram_mb - 15 * 1024 # Leave 15 GB RAM
-    elif system_ram_mb > 60*1024:
-      spark_mb = system_ram_mb - 10 * 1024 # Leave 10 GB RAM
-    elif system_ram_mb > 40*1024:
-      spark_mb = system_ram_mb - 6 * 1024 # Leave 6 GB RAM
-    elif system_ram_mb > 20*1024:
-      spark_mb = system_ram_mb - 3 * 1024 # Leave 3 GB RAM
-    elif system_ram_mb > 10*1024:
-      spark_mb = system_ram_mb - 2 * 1024 # Leave 2 GB RAM
-    else:
-      spark_mb = max(512, system_ram_mb - 1300) # Leave 1.3 GB RAM
-
-except ValueError as e:
-    #print "Value error({0})".format(e.strerror)
-    print "Error spark_mb"
-    #continue
+system_ram_mb = system_ram_kb / 1024
+# Leave some RAM for the OS, Hadoop daemons, and system caches
+if system_ram_mb > 100*1024:
+  spark_mb = system_ram_mb - 15 * 1024 # Leave 15 GB RAM
+elif system_ram_mb > 60*1024:
+  spark_mb = system_ram_mb - 10 * 1024 # Leave 10 GB RAM
+elif system_ram_mb > 40*1024:
+  spark_mb = system_ram_mb - 6 * 1024 # Leave 6 GB RAM
+elif system_ram_mb > 20*1024:
+  spark_mb = system_ram_mb - 3 * 1024 # Leave 3 GB RAM
+elif system_ram_mb > 10*1024:
+  spark_mb = system_ram_mb - 2 * 1024 # Leave 2 GB RAM
 else:
-    spark_mb = 225
+  spark_mb = max(512, system_ram_mb - 1300) # Leave 1.3 GB RAM
 
 # Make tachyon_mb as spark_mb for now.
 tachyon_mb = spark_mb
@@ -90,12 +79,14 @@ template_dir="/home/ubuntu/spark-ec2/templates"
 for path, dirs, files in os.walk(template_dir):
     #Skip svn files...
     if path.find(".svn") == -1:
-        dest_dir = os.path.join('/', path[len(template_dir):])
-        try:
-            if not os.path.exists(dest_dir):
-                os.makedirs(dest_dir)
-        except OSError as e:
-            print "OS error({0})"
+        dest_dir = os.path.join('/', path[len(template_dir):]).replace("ubuntu","home/ubuntu")
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+        except OSError:
+            print "OS error forcefully creating directory (sudo) for %s"%dest_dir
+            subprocess.call("sudo mkdir %s"%dest_dir, shell=True)
+            subprocess.call("sudo chown -R ubuntu %s"%dest_dir, shell=True)
+
         for filename in files:
             if filename[0] not in '#.~' and filename[-1] != '~':
                 dest_file = os.path.join(dest_dir, filename)
