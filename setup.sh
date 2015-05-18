@@ -16,10 +16,10 @@ pushd /home/ubuntu/spark-ec2 > /dev/null
 # Load the environment variables specific to this AMI
 source /home/ubuntu/.bashrc
 
+cp /home/ubuntu/spark-ec2/ec2-variables.sh /home/ubuntu/
 # Load the cluster variables set by the deploy script
 source /home/ubuntu/ec2-variables.sh
 
-cp /home/ubuntu/ec2-variables.sh /home/ubuntu/spark-ec2
 
 # Set hostname based on EC2 private DNS name, so that it is set correctly
 # even if the instance is restarted with a different private DNS name
