@@ -21,10 +21,6 @@ HOSTNAME=$PRIVATE_DNS  # Fix the bash built-in hostname variable too
 
 echo "checking/fixing resolution of hostname"
 bash /home/ubuntu/spark-ec2/resolve-hostname.sh
-#Create etc/hosts
-#parallel-ssh -i -h /home/ubuntu/spark/conf/slaves cat /etc/hosts | grep hli >> /var/tmp/blah
-
-sudo bash -c "cat /home/ubuntu/spark/conf/hosts >> /etc/hosts"
 
 # Work around for R3 or I2 instances without pre-formatted ext3 disks
 instance_type=$(curl http://169.254.169.254/latest/meta-data/instance-type 2> /dev/null)
@@ -129,5 +125,8 @@ cat /home/ubuntu/spark-ec2/github.hostkey >> /home/ubuntu/.ssh/known_hosts
 sudo bash -c "echo '#!/bin/bash' > /usr/bin/realpath"
 sudo bash -c "echo 'readlink -e \"$@\"' >> /usr/bin/realpath"
 sudo chmod a+x /usr/bin/realpath
+
+#Create etc/hosts
+sudo bash -c "cat /home/ubuntu/spark/conf/hosts >> /etc/hosts"
 
 popd > /dev/null
