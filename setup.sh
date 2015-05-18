@@ -16,7 +16,6 @@ pushd /home/ubuntu/spark-ec2 > /dev/null
 # Load the environment variables specific to this AMI
 source /home/ubuntu/.bashrc
 
-cp /home/ubuntu/spark-ec2/ec2-variables.sh /home/ubuntu/
 # Load the cluster variables set by the deploy script
 source /home/ubuntu/ec2-variables.sh
 
