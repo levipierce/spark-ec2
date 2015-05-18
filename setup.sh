@@ -105,13 +105,12 @@ echo "Creating local config files..."
 # Copy spark conf by default
 echo "Deploying Spark config files..."
 chmod u+x /home/ubuntu/spark/conf/spark-env.sh
-/home/ubuntu/spark-ec2/copy-dir /home/ubuntu/spark/conf
-
 #Create etc/hosts
 parallel-ssh -i -h /home/ubuntu/spark/conf/slaves cat /etc/hosts | grep hli >> /var/tmp/blah
 sudo bash -c "cat /var/tmp/blah >> /etc/hosts"
 mv /var/tmp/blah /home/ubuntu/spark/conf/hosts
 /home/ubuntu/spark-ec2/copy-dir /home/ubuntu/spark/conf
+
 # Setup each module
 for module in $MODULES; do
   echo "Setting up $module"
