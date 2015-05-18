@@ -19,8 +19,8 @@ case "$HADOOP_MAJOR_VERSION" in
     mv hadoop-2.0.0-cdh4.2.0/ ephemeral-hdfs/
 
     # Have single conf dir
-    rm -rf /home/ubuntu/ephemeral-hdfs/etc/hadoop/
-    ln -s /home/ubuntu/ephemeral-hdfs/conf /home/ubuntu/ephemeral-hdfs/etc/hadoop
+    #rm -rf /home/ubuntu/ephemeral-hdfs/etc/hadoop/
+    ln -s /home/ubuntu/ephemeral-hdfs/etc/hadoop /home/ubuntu/ephemeral-hdfs/conf 
     ;;
 
   *)

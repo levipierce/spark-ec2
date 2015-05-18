@@ -23,8 +23,8 @@ case "$HADOOP_MAJOR_VERSION" in
     mv hadoop-2.0.0-cdh4.2.0/ persistent-hdfs/
 
     # Have single conf dir
-    rm -rf /home/ubuntu/persistent-hdfs/etc/hadoop/
-    ln -s /home/ubuntu/persistent-hdfs/conf /home/ubuntu/persistent-hdfs/etc/hadoop
+    #rm -rf /home/ubuntu/persistent-hdfs/etc/hadoop/
+    ln -s /home/ubuntu/persistent-hdfs/etc/hadoop /home/ubuntu/persistent-hdfs/conf 
     ;;
 
   *)

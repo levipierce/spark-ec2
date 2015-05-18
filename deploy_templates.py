@@ -5,6 +5,7 @@ from __future__ import with_statement
 
 import os
 import sys
+import subprocess
 
 # Deploy the configuration file templates in the spark-ec2/templates directory
 # to the root filesystem, substituting variables such as the master hostname,
@@ -24,8 +25,8 @@ slave_mem_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
 
 slave_cpu_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
         (first_slave, cpu_command)
-
 slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
+
 
 slave_cpus = int(os.popen(slave_cpu_command).read().strip())
 
@@ -76,18 +77,22 @@ template_vars = {
 template_dir="/home/ubuntu/spark-ec2/templates"
 
 for path, dirs, files in os.walk(template_dir):
-  if path.find(".svn") == -1:
-    dest_dir = os.path.join('/', path[len(template_dir):])
-    if not os.path.exists(dest_dir):
-        os.makedirs(dest_dir)
-    for filename in files:
-      if filename[0] not in '#.~' and filename[-1] != '~':
-        dest_file = os.path.join(dest_dir, filename)
-        with open(os.path.join(path, filename)) as src:
-          with open(dest_file, "w") as dest:
-            print "Configuring " + dest_file
-            text = src.read()
-            for key in template_vars:
-              text = text.replace("{{" + key + "}}", template_vars[key] or '')
-            dest.write(text)
-            dest.close()
+    #Skip svn files...
+    if path.find(".svn") == -1:
+        dest_dir = os.path.join('/', path[len(template_dir):]).replace("ubuntu","home/ubuntu")
+        if not os.path.exists(dest_dir):
+            print "OS error forcefully creating directory (sudo) for %s"%dest_dir
+            subprocess.call("sudo mkdir %s"%dest_dir, shell=True)
+            subprocess.call("sudo chown -R ubuntu %s"%dest_dir, shell=True)
+
+        for filename in files:
+            if filename[0] not in '#.~' and filename[-1] != '~':
+                dest_file = os.path.join(dest_dir, filename)
+                with open(os.path.join(path, filename)) as src:
+                    with open(dest_file, "w") as dest:
+                        print "Configuring " + dest_file
+                        text = src.read()
+                        for key in template_vars:
+                            text = text.replace("{{" + key + "}}", template_vars[key] or '')
+                        dest.write(text)
+                        dest.close()

@@ -98,7 +98,7 @@ done
 # Deploy templates
 # TODO: Move configuring templates to a per-module ?
 echo "Creating local config files..."
-sudo ./deploy_templates.py
+./deploy_templates.py
 
 # Copy spark conf by default
 echo "Deploying Spark config files..."
