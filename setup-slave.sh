@@ -35,16 +35,16 @@ if [[ $instance_type == r3* || $instance_type == i2* || $instance_type == hi1* ]
   sudo mkdir /mnt
   # To turn TRIM support on, uncomment the following line.
   #echo '/dev/sdb /mnt  ext4  defaults,noatime,nodiratime,discard 0 0' >> /etc/fstab
-  sudo mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdb
-  sudo mount -o $EXT4_MOUNT_OPTS /dev/sdb /mnt
+  sudo mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/xvdb
+  sudo mount -o $EXT4_MOUNT_OPTS /dev/xvdb /mnt
 
   if [[ $instance_type == "r3.8xlarge" || $instance_type == "hi1.4xlarge" ]]; then
     sudo mkdir /mnt2
     # To turn TRIM support on, uncomment the following line.
     #echo '/dev/sdc /mnt2  ext4  defaults,noatime,nodiratime,discard 0 0' >> /etc/fstab
     if [[ $instance_type == "r3.8xlarge" ]]; then
-      sudo mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdc      
-      sudo mount -o $EXT4_MOUNT_OPTS /dev/sdc /mnt2
+      sudo mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/xvdc
+      sudo mount -o $EXT4_MOUNT_OPTS /dev/xvdc /mnt2
     fi
     # To turn TRIM support on, uncomment the following line.
     #echo '/dev/sdf /mnt2  ext4  defaults,noatime,nodiratime,discard 0 0' >> /etc/fstab
