@@ -52,7 +52,7 @@ try:
 
 except ValueError as e:
     print "Value error({0}): {1}".format(e.errno, e.strerror)
-    continue
+    #continue
 else:
     spark_mb = 225
 
