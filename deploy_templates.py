@@ -27,7 +27,7 @@ slave_cpu_command = "ssh -t -o StrictHostKeyChecking=no %s %s" %\
 try:
     slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
 except ValueError as e:
-    print "Value error({0}): {1}".format(e.errno, e.strerror)
+    print "Value error({0})".format(e.strerror)
 
 
 try:
@@ -51,7 +51,7 @@ try:
       spark_mb = max(512, system_ram_mb - 1300) # Leave 1.3 GB RAM
 
 except ValueError as e:
-    print "Value error({0}): {1}".format(e.errno, e.strerror)
+    print "Value error({0})".format(e.strerror)
     #continue
 else:
     spark_mb = 225
@@ -93,7 +93,7 @@ for path, dirs, files in os.walk(template_dir):
             if not os.path.exists(dest_dir):
                 os.makedirs(dest_dir)
         except OSError as e:
-            print "OS error({0}): {1}".format(e.errno, e.strerror)
+            print "OS error({0})".format(e.strerror)
         for filename in files:
             if filename[0] not in '#.~' and filename[-1] != '~':
                 dest_file = os.path.join(dest_dir, filename)
