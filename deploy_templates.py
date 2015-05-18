@@ -81,8 +81,6 @@ for path, dirs, files in os.walk(template_dir):
     if path.find(".svn") == -1:
         dest_dir = os.path.join('/', path[len(template_dir):]).replace("ubuntu","home/ubuntu")
         if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
-        except OSError:
             print "OS error forcefully creating directory (sudo) for %s"%dest_dir
             subprocess.call("sudo mkdir %s"%dest_dir, shell=True)
             subprocess.call("sudo chown -R ubuntu %s"%dest_dir, shell=True)
