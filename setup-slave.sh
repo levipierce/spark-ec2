@@ -127,6 +127,6 @@ sudo bash -c "echo 'readlink -e \"$@\"' >> /usr/bin/realpath"
 sudo chmod a+x /usr/bin/realpath
 
 #Create etc/hosts
-sudo bash -c "cat /home/ubuntu/spark/conf/hosts >> /etc/hosts"
+sudo bash -c "cat /home/ubuntu/spark-ec2/hosts >> /etc/hosts"
 
 popd > /dev/null

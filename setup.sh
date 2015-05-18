@@ -53,6 +53,12 @@ fi
 
 echo "Setting executable permissions on scripts..."
 find . -regex "^.+.\(sh\|py\)" | xargs chmod a+x
+#Create etc/hosts
+parallel-ssh -i -h /home/ubuntu/spark/conf/slaves cat /etc/hosts | grep hli >> /var/tmp/blah
+#ADD MASTER!!!
+cat /etc/hosts | grep hli >> /var/tmp/blah
+sudo bash -c "cat /var/tmp/blah |sort|uniq >> /etc/hosts"
+cp /var/tmp/blah /home/ubuntu/spark-ec2/hosts
 
 echo "RSYNC'ing /home/ubuntu/spark-ec2 to other cluster nodes..."
 rsync_start_time="$(date +'%s')"
@@ -105,12 +111,6 @@ echo "Creating local config files..."
 # Copy spark conf by default
 echo "Deploying Spark config files..."
 chmod u+x /home/ubuntu/spark/conf/spark-env.sh
-#Create etc/hosts
-parallel-ssh -i -h /home/ubuntu/spark/conf/slaves cat /etc/hosts | grep hli >> /var/tmp/blah
-#ADD MASTER!!!
-cat /etc/hosts | grep hli >> /var/tmp/blah
-sudo bash -c "cat /var/tmp/blah |sort|uniq >> /etc/hosts"
-cp /var/tmp/blah /home/ubuntu/spark/conf/hosts
 /home/ubuntu/spark-ec2/copy-dir /home/ubuntu/spark/conf
 
 # Setup each module
