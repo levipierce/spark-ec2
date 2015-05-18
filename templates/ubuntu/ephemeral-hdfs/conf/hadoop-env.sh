@@ -51,7 +51,7 @@ export HADOOP_LOG_DIR=/mnt/ephemeral-hdfs/logs
 # export HADOOP_SLAVE_SLEEP=0.1
 
 # The directory where pid files are stored. /tmp by default.
-export HADOOP_PID_DIR=/var/hadoop/ephemeral-hdfs/pids
+export HADOOP_PID_DIR=/var/tmp/pids
 
 # A string representing this instance of hadoop. $USER by default.
 # export HADOOP_IDENT_STRING=$USER
