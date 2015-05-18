@@ -106,19 +106,14 @@ parallel-ssh -i -h /home/ubuntu/spark/conf/slaves cat /etc/hosts | grep hli >> /
 #ADD MASTER!!!
 cat /etc/hosts | grep hli >> /var/tmp/blah
 sudo bash -c "cat /var/tmp/blah |sort|uniq >> /etc/hosts"
-cp /var/tmp/blah /home/ubuntu/spark/conf/hosts
 
+parallel-scp -h /home/ubuntu/spark/conf/slaves /etc/hosts /var/tmp/blah
 # Copy spark conf by default
 echo "Deploying Spark config files..."
 chmod u+x /home/ubuntu/spark/conf/spark-env.sh
 /home/ubuntu/spark-ec2/copy-dir /home/ubuntu/spark/conf
-parallel-ssh --inline \
-    --host "$MASTERS $SLAVES" \
-    --user ubuntu \
-    --extra-args "-t -t $SSH_OPTS" \
-    --timeout 0 \
-    "spark-ec2/setup-slave.sh"
 
+parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "mv /var/tmp/blah /etc/hosts"'
 # Setup each module
 for module in $MODULES; do
   echo "Setting up $module"
