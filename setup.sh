@@ -18,6 +18,7 @@ source /home/ubuntu/.bashrc
 
 # Load the cluster variables set by the deploy script
 source /home/ubuntu/ec2-variables.sh
+cp /home/ubuntu/ec2-variables.sh /home/ubuntu/spark-ec2
 
 
 # Set hostname based on EC2 private DNS name, so that it is set correctly
