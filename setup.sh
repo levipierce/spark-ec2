@@ -101,11 +101,6 @@ echo "Creating local config files..."
 ./deploy_templates.py
 
 
-#Create etc/hosts
-parallel-ssh -i -h /home/ubuntu/spark/conf/slaves cat /etc/hosts | grep hli >> /var/tmp/blah
-#ADD MASTER!!!
-cat /etc/hosts | grep hli >> /var/tmp/blah
-sudo bash -c "cat /var/tmp/blah |sort|uniq >> /etc/hosts"
 
 parallel-scp -h /home/ubuntu/spark/conf/slaves /etc/hosts /var/tmp/blah
 # Copy spark conf by default
@@ -113,7 +108,6 @@ echo "Deploying Spark config files..."
 chmod u+x /home/ubuntu/spark/conf/spark-env.sh
 /home/ubuntu/spark-ec2/copy-dir /home/ubuntu/spark/conf
 
-parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "mv /var/tmp/blah /etc/hosts"'
 # Setup each module
 for module in $MODULES; do
   echo "Setting up $module"
@@ -124,5 +118,11 @@ for module in $MODULES; do
   echo_time_diff "$module setup" "$module_setup_start_time" "$module_setup_end_time"
   cd /home/ubuntu/spark-ec2  # guard against setup.sh changing the cwd
 done
+#Create etc/hosts
+parallel-ssh -i -h /home/ubuntu/spark/conf/slaves cat /etc/hosts | grep hli >> /var/tmp/blah
+#ADD MASTER!!!
+cat /etc/hosts | grep hli >> /var/tmp/blah
+sudo bash -c "cat /var/tmp/blah |sort|uniq >> /var/tmp/blah.sort"
+parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "mv /var/tmp/blah.sort /etc/hosts"'
 
 popd > /dev/null
