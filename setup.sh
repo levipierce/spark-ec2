@@ -125,4 +125,12 @@ cat /etc/hosts | grep hli >> /var/tmp/blah
 sudo bash -c "cat /var/tmp/blah |sort|uniq >> /var/tmp/blah.sort"
 parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "mv /var/tmp/blah.sort /etc/hosts"'
 
+#Here we create the work dir for spark in /mnt/work which will be one of the SSD drives on a r3 or m3
+parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "rm -r /home/ubuntu/spark/work"'
+parallel-ssh -h /home/ubuntu/spark/conf/slaves mkdir /mnt/work
+parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "ln -s /mnt/work /home/ubuntu/spark/work"'
+
+
+
+
 popd > /dev/null
