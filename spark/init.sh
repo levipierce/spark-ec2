@@ -109,15 +109,20 @@ else
         wget http://s3.amazonaws.com/spark-related-packages/spark-1.2.0-bin-cdh4.tgz
       fi
       ;;
-    1.2.1)
+    1.3.1)
       if [[ "$HADOOP_MAJOR_VERSION" == "1" ]]; then
         wget http://s3.amazonaws.com/spark-related-packages/spark-1.2.1-bin-hadoop1.tgz
       else
         #wget http://s3.amazonaws.com/spark-related-packages/spark-1.2.1-bin-cdh4.tgz
         #wget http://archive.cloudera.com/cdh5/cdh/5/spark-1.3.0-cdh5.4.1.tar.gz
-        #wget http://s3.amazonaws.com/spark-related-packages/spark-1.3.1-bin-cdh4.tgz
-        wget http://people.apache.org/~pwendell/spark-nightly/spark-master-bin/latest/spark-1.5.0-SNAPSHOT-bin-cdh4.tgz
+        wget http://s3.amazonaws.com/spark-related-packages/spark-1.3.1-bin-cdh4.tgz
       fi
+      ;;
+    1.4.0)
+      wget http://s3.amazonaws.com/spark-related-packages/spark-1.4.0-bin-cdh4.tgz
+      ;;
+    1.5.0)
+      wget http://people.apache.org/~pwendell/spark-nightly/spark-master-bin/latest/spark-1.5.0-SNAPSHOT-bin-cdh4.tgz
       ;;
     *)
       echo "ERROR: Unknown Spark version"
