@@ -121,6 +121,9 @@ else
     1.4.0)
       wget http://s3.amazonaws.com/spark-related-packages/spark-1.4.0-bin-cdh4.tgz
       ;;
+    1.4.1)
+      wget http://s3.amazonaws.com/spark-related-packages/spark-1.4.1-bin-cdh4.tgz
+      ;;
     1.5.0)
       wget http://people.apache.org/~pwendell/spark-nightly/spark-master-bin/latest/spark-1.5.0-SNAPSHOT-bin-cdh4.tgz
       ;;
