@@ -129,9 +129,6 @@ parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "cat /var/tmp/blah.
 #Here we create the work dir for spark in /mnt/work which will be one of the SSD drives on a r3 or m3
 parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "rm -r /home/ubuntu/spark/work"'
 parallel-ssh -h /home/ubuntu/spark/conf/slaves mkdir /mnt/work
-parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "ln -s /mnt/work /home/ubuntu/spark/work"'
-
-
-
+parallel-ssh -h /home/ubuntu/spark/conf/slaves 'sudo bash -c "ln -sf /mnt/work /home/ubuntu/spark/work"'
 
 popd > /dev/null
